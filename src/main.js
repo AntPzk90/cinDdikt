@@ -5,7 +5,10 @@ import {createLoadMoreBtnTemplate} from './components/load-more-btn';
 import {createMainNavigationTemplate} from './components/main-navigation';
 import {createProfileRatingTemplate} from './components/profile-rating';
 import {createSortTemplate} from './components/sort';
-const FILMS_COUNT = 3;
+
+import {FilmsCardsMok} from './mock/card';
+import {FilmsFiltersMok} from './mock/main-navigation';
+
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -13,12 +16,15 @@ const render = (container, template, place = `beforeend`) => {
 const header = document.querySelector('.header');
 const main = document.querySelector('.main');
 render(header, createProfileRatingTemplate());
-render(main, createMainNavigationTemplate());
+const filters = FilmsFiltersMok();
+console.log(filters)
+render(main, createMainNavigationTemplate(filters));
 render(main, createSortTemplate());
 render(main, createFilmsContainerTemplate());
-var filmsContainer = document.querySelector('.films-list__container');
-for (let i = 0; i < FILMS_COUNT; i++){
-  render(filmsContainer, createFilmCardTemplate());
+const filmsContainer = document.querySelector('.films-list__container');
+const films = FilmsCardsMok();
+for (let i = 0; i < films.length; i++){
+  render(filmsContainer, createFilmCardTemplate(films[i]));
 }
 render(main, createLoadMoreBtnTemplate());
 
