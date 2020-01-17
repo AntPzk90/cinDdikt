@@ -1,9 +1,3 @@
-
-import {createFilmDetailsCardTemplate} from './components/film-details-card';
-
-import {createLoadMoreBtnTemplate} from './components/load-more-btn';
-
-//
 import {FilmsCardsMok} from './mock/card';
 import {FilmsFiltersMok} from './mock/main-navigation';
 //
@@ -12,6 +6,7 @@ import MainMenuComponent from './components/main-navigation';
 import Sort from './components/sort';
 import FilmsContainer from './components/films-container';
 import FilmCard from './components/film-card';
+import FilmCardDetails from './components/film-details-card';
 import ShowMoreBtn from './components/load-more-btn.js';
 
 import {render, RenderPosition}from './utils.js'
@@ -23,9 +18,24 @@ const films = FilmsCardsMok();
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
 let showingFilmsCount = SHOWING_FILMS_COUNT_ON_START;
-// const render = (container, template, place = `beforeend`) => {
-//   container.insertAdjacentHTML(place, template);
-// };
+
+const renderCardFilm = (film) => {
+  const cardComponent = new FilmCard(film);
+  const cardDetailsComponent = new FilmCardDetails(film);
+
+  const cardPoster = cardComponent.getElement().querySelector(`.film-card__poster`);
+  cardPoster.addEventListener(`click`,() => {
+    render(main,
+      cardDetailsComponent.getElement(),RenderPosition.BEFOREEND);
+  });
+  const filmDetailsCloseBtn = cardDetailsComponent.getElement().querySelector(`.film-details__close-btn`);
+  filmDetailsCloseBtn.addEventListener(`click`, () => {
+    cardDetailsComponent.getElement().remove();
+    cardDetailsComponent.removeElement();
+  });
+
+  render(filmsContainer, cardComponent.getElement(), RenderPosition.BEFOREEND);
+}
 
 render(header, new ProfileRating().getElement(), RenderPosition.BEFOREEND);
 render(main, new MainMenuComponent(filters).getElement(), RenderPosition.BEFOREEND);
@@ -35,19 +45,21 @@ render(main, new FilmsContainer().getElement(), RenderPosition.BEFOREEND)
 const filmsContainer = document.querySelector('.films-list__container');
 
 films.slice(0, showingFilmsCount)
-  .forEach((film) => render(filmsContainer, new FilmCard(film).getElement(), RenderPosition.BEFOREEND));
-render(main, new ShowMoreBtn().getElement(), RenderPosition.BEFOREEND);
+  .forEach((film) => renderCardFilm(film));
 
-const showMoreButton = document.querySelector(`.films-list__show-more`);
+const showMoreButton = new ShowMoreBtn();
 
-showMoreButton.addEventListener(`click`, () => {
+render(main, showMoreButton.getElement(), RenderPosition.BEFOREEND);
+
+showMoreButton.getElement().addEventListener(`click`, () => {
   const prevFilmsCount = showingFilmsCount;
   showingFilmsCount = showingFilmsCount + SHOWING_FILMS_COUNT_BY_BUTTON;
 
   films.slice(prevFilmsCount, showingFilmsCount)
-    .forEach((film) => render(filmsContainer, new FilmCard(film).getElement(), RenderPosition.BEFOREEND));
+    .forEach((film) => renderCardFilm(film));
   if (showingFilmsCount >= films.length) {
-    showMoreButton.remove();
+    showMoreButton.getElement().remove();
+    showMoreButton.removeElement();
   }
 });
 

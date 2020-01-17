@@ -41,7 +41,6 @@ export default class FilmCard {
     this._card = card;
   }
   getTemplate () {
-    console.log(createFilmCardTemplate(this._card))
     return createFilmCardTemplate(this._card);
   }
   getElement () {

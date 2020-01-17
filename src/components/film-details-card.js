@@ -1,4 +1,24 @@
-export const createFilmDetailsCardTemplate = () => {
+import {createElement} from './../utils';
+export const createFilmDetailsCardTemplate = (card) => {
+  console.log(card)
+  const {filmInfo, comments} = card;
+  const {title, totalRating, poster, description, release, runtime,genre} = filmInfo;
+  const yearProduction = new Date(release.date).getFullYear();
+  const transformTimeDuration = () => {
+    let time = runtime;
+    let hours = time / 60 ^ 0;
+    if (hours) {
+        let minutes = time % 60;
+        if (minutes < 10) minutes = `0` + minutes;
+      time = hours + ` h ` + minutes + ` m`;
+    } else {
+      time = time + ` m`;
+    }
+    return time;
+  }
+  const cardDuration = transformTimeDuration();
+  const filmGenre = genre.join(` `);
+
   return `<section class="film-details">
   rm <foclass="film-details__inner" action="" method="get">
       <div class="form-details__top-container">
@@ -7,7 +27,7 @@ export const createFilmDetailsCardTemplate = () => {
         </div>
         <div class="film-details__info-wrap">
           <div class="film-details__poster">
-            <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
+            <img class="film-details__poster-img" src="${poster}" alt="${title}">
 
             <p class="film-details__age">18+</p>
           </div>
@@ -169,3 +189,23 @@ export const createFilmDetailsCardTemplate = () => {
     </foclass="film-details__inner">
   </section>`;
 };
+
+export default class FilmCardDetails {
+  constructor (card) {
+    this._element = null;
+    this._card = card;
+  }
+  getTemplate () {
+    return createFilmDetailsCardTemplate(this._card);
+  }
+  getElement () {
+    if(!this._element){
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+  removeElement () {
+    console.log(`ok`)
+    this._element = null;
+  }
+}
