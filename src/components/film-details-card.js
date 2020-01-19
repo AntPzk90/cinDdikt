@@ -1,6 +1,5 @@
 import {createElement} from './../utils';
 export const createFilmDetailsCardTemplate = (card) => {
-  console.log(card)
   const {filmInfo, comments} = card;
   const {title, totalRating, poster, description, release, runtime,genre} = filmInfo;
   const yearProduction = new Date(release.date).getFullYear();
@@ -205,7 +204,8 @@ export default class FilmCardDetails {
     return this._element;
   }
   removeElement () {
-    console.log(`ok`)
+    console.log(this._element)
     this._element = null;
+    console.log(this._element)
   }
 }
