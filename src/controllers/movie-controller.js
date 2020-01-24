@@ -26,7 +26,7 @@ export default class MovieController {
     const cardPoster = this._film.getElement().querySelector(`.film-card__poster`);
 
     cardPoster.addEventListener(`click`,() => {
-      render(container, this._detailsFilm.getElement(),RenderPosition.BEFOREEND);
+      render(this._container, this._detailsFilm.getElement(),RenderPosition.BEFOREEND);
       document.addEventListener(`keydown`,onEscPress);
     });
 
@@ -35,6 +35,6 @@ export default class MovieController {
       removeCardFilmDetails();
     });
 
-    render(container, this._film.getElement(), RenderPosition.BEFOREEND);
+    render(this._container, this._film.getElement(), RenderPosition.BEFOREEND);
   }
 }

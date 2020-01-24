@@ -18,7 +18,7 @@ render(main, new MainMenuComponent(filters).getElement(), RenderPosition.BEFOREE
 
 const pageController = new PageController(main);
 pageController.render(films);
-const movieController =  new MovieController(filmsList);
-movieController.renderCardFilm(films)
+// const movieController =  new MovieController(filmsList);
+// movieController.renderCardFilm(films)
 
 

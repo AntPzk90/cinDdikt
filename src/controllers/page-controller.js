@@ -5,6 +5,7 @@ import ShowMoreBtn from './../components/load-more-btn.js';
 //import MainMenuComponent from './components/main-navigation';
 import Sort,{SortType} from './../components/sort';
 import FilmsContainer from './../components/films-container';
+import MovieController from './movie-controller.js';
 
 const SHOWING_FILMS_COUNT_ON_START = 5;
 const SHOWING_FILMS_COUNT_BY_BUTTON = 5;
@@ -22,45 +23,14 @@ export default class PageController {
 
     render(this._container, this._sortComponent.getElement(), RenderPosition.BEFOREEND);
     render(this._container, new FilmsContainer().getElement(), RenderPosition.BEFOREEND);
+
     const container = this._container.querySelector(`.films-list__container`);
 
-    // функция рендера карточек фильма
-    const renderCardFilm = (film) => {
-
-      const cardComponent = new FilmCard(film);
-      const cardDetailsComponent = new FilmCardDetails(film);
-
-      const removeCardFilmDetails = () => {
-        cardDetailsComponent.getElement().remove();
-        //cardDetailsComponent.removeElement();
-      };
-      const onEscPress = (evt) => {
-        if(evt.key === `Escape` || evt.key === `Esc`){
-          removeCardFilmDetails();
-          document.removeEventListener(`keydown`, onEscPress);
-        }
-      };
-
-      const cardPoster = cardComponent.getElement().querySelector(`.film-card__poster`);
-
-      cardPoster.addEventListener(`click`,() => {
-        render(container, cardDetailsComponent.getElement(),RenderPosition.BEFOREEND);
-        document.addEventListener(`keydown`,onEscPress);
-      });
-
-      const filmDetailsCloseBtn = cardDetailsComponent.getElement().querySelector(`.film-details__close-btn`);
-      filmDetailsCloseBtn.addEventListener(`click`, () => {
-        removeCardFilmDetails();
-      });
-
-      render(container, cardComponent.getElement(), RenderPosition.BEFOREEND);
-    }
-    //конец рендера
     if(films.length == 0){
       render(filmsContainer, new NofilmsMessage().getElement(), RenderPosition.BEFOREEND);
     } else {
       films.slice(0, showingFilmsCount)
-        .forEach((film) => renderCardFilm(film));
+        .forEach((film) => new MovieController(container, film).renderCardFilm());
 
       const createShowMoreBtn = () => {
         if (showingFilmsCount >= films.length) {
@@ -109,9 +79,9 @@ export default class PageController {
         }
 
         container.innerHTML = ``;
-        console.log(showingFilmsCount)
+
         sortedFilms.slice(0, showingFilmsCount)
-        .forEach((film) => renderCardFilm(film));
+        .forEach((film) => new MovieController(container, film).renderCardFilm());
       });
     }
   }
