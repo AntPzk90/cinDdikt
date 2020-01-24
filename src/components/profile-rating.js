@@ -1,4 +1,5 @@
-import {createElement} from './../utils';
+import AbstractComponent from './abstract-component.js';
+
 export const createProfileRatingTemplate = () => {
   return `<section class="header__profile profile">
     <p class="profile__rating">Movie Buff</p>
@@ -6,20 +7,12 @@ export const createProfileRatingTemplate = () => {
   </section>`;
 };
 
-export default class ProfileRating {
-  constructor (filters) {
-    this._element = null;
+export default class ProfileRating extends AbstractComponent{
+  constructor () {
+    super();
   }
+
   getTemplate () {
     return createProfileRatingTemplate();
-  }
-  getElement () {
-    if(!this._element){
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement () {
-    this._element = null;
   }
 }
