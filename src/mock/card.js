@@ -45,51 +45,51 @@ const generateFilmsCard = (index) => {
   return {
     "id": (index + 1).toString(),
     "comments": [
-      "Good film",
-      "Bad Film",
-      "So-so film",
+      `Good film`,
+      `Bad Film`,
+      `So-so film`,
     ],
 
     "filmInfo": {
       "title": FilmsTitle[index],
-      "alternativeTitle": "Laziness Who Sold Themselves",
-      "totalRating": generateRandomInteger(2,8),
-      "poster": "./images/posters/" + FilmsPosters[generateRandomInteger(0,FilmsPosters.length - 1)],
+      "alternativeTitle": `Laziness Who Sold Themselves`,
+      "totalRating": generateRandomInteger(2, 8),
+      "poster": `./images/posters/` + FilmsPosters[generateRandomInteger(0, FilmsPosters.length - 1)],
       "ageRating": 0,
-      "director": "Tom Ford",
+      "director": `Tom Ford`,
       "writers": [
-        "Takeshi Kitano"
+        `Takeshi Kitano`
       ],
       "actors": [
-        "Morgan Freeman"
+        `Morgan Freeman`
       ],
       "release": {
         "date": 1475924187819,
-        "releaseCountry": "Finland"
+        "releaseCountry": `Finland`
       },
       "runtime": generateRandomInteger(70, 90),
       "genre": [
-        "Comedy",
-        "Detective"
+        `Comedy`,
+        `Detective`
       ],
-      "description": FilmsDescription.sort().slice(generateRandomInteger(0, 3), generateRandomInteger(3,7)).join(''),
+      "description": FilmsDescription.sort().slice(generateRandomInteger(0, 3), generateRandomInteger(3, 7)).join(``),
     },
 
     "user_details": {
-      "personal_rating": generateRandomInteger(4,9),
+      "personal_rating": generateRandomInteger(4, 9),
       "watchlist": false,
       "already_watched": true,
-      "watching_date": "2019-05-11T16:12:32.554Z",
+      "watching_date": `2019-05-11T16:12:32.554Z`,
       "favorite": false
     }
-  }
+  };
 };
 
 const generateFilmCards = (count) => {
   return new Array(count)
     .fill(``)
-    .map((el,i) => generateFilmsCard(i));
+    .map((el, i) => generateFilmsCard(i));
 };
-export const FilmsCardsMok  = () => {
-  return generateFilmCards(15)
-}
+export const filmsCardsMok = () => {
+  return generateFilmCards(15);
+};

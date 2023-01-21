@@ -1,4 +1,7 @@
-export const createFilmDetailsCardTemplate = () => {
+import {createElement} from "../render";
+
+const createFilmDetailsCardTemplate = (film) => {
+  const {id} = film;
   return `<section class="film-details">
   rm <foclass="film-details__inner" action="" method="get">
       <div class="form-details__top-container">
@@ -9,7 +12,7 @@ export const createFilmDetailsCardTemplate = () => {
           <div class="film-details__poster">
             <img class="film-details__poster-img" src="./images/posters/the-great-flamarion.jpg" alt="">
 
-            <p class="film-details__age">18+</p>
+            <p class="film-details__age">18+ ${id}</p>
           </div>
 
           <div class="film-details__info">
@@ -169,3 +172,28 @@ export const createFilmDetailsCardTemplate = () => {
     </foclass="film-details__inner">
   </section>`;
 };
+
+export default class FilmDetailsCardView {
+  #element = null;
+  #film = null;
+
+  constructor(film) {
+    this.#film = film;
+  }
+
+  get element() {
+    if(!this.#element) {
+      this.#element = createElement(this.template)
+    }
+
+    return this.#element
+  }
+
+  get template() {
+    return createFilmDetailsCardTemplate(this.#film);
+  }
+
+  removeElement() {
+    this.#element = null
+  }
+}

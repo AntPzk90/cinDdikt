@@ -4,7 +4,7 @@ const filterNames = [
   `History`,
   `Favorites`,
   `Stats`,
-]
+];
 
 const generateFilters = () => {
   return filterNames.map((it) => {
@@ -15,6 +15,6 @@ const generateFilters = () => {
   });
 };
 
-export const FilmsFiltersMok  = () => {
+export const filmsFiltersMok = () => {
   return generateFilters();
-}
+};
